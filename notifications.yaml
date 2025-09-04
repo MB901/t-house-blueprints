@@ -1068,7 +1068,7 @@ sequence:
 
       # [Tag]
       custom_tag: !input tag # No need for manual definition anymore, treat existing definitions as custom tags.
-      tag: "{{ iif(custom_tag|length, custom_tag, (this.entity_id ~ '-' ~ context.id)) | truncate(64, killwords=True, end='') }}"
+      tag: "{{ iif(custom_tag|length, custom_tag, (this.entity_id ~ '-' ~ context.id)) | truncate(64, killwords=True, end='', leeway=0) }}"
 
       # [Grouping]
       group: !input group
