@@ -1,7 +1,7 @@
 mode: parallel
 blueprint:
   name: 🔔 Notifications (Version 2.1.6)
-  source_url: https://github.com/samuelthng/t-house-blueprints/blob/main/notifications.yaml
+  source_url: https://github.com/mb901/t-house-blueprints/blob/main/notifications.yaml
   homeassistant:
     min_version: 2024.06.0
   domain: script
