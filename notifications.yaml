@@ -1,6 +1,6 @@
 mode: parallel
 blueprint:
-  name: 🔔 Notifications (Version 2.1.7)
+  name: 🔔 Notifications (Version 2.1.8)
   source_url: https://github.com/mb901/t-house-blueprints/blob/main/notifications.yaml
   homeassistant:
     min_version: 2024.06.0
@@ -9,7 +9,7 @@ blueprint:
   description: >-
     <div>
       <h2>🔔 Notifications</h2>
-      <b>Version 2.1.7</b> | 🔗 <a href="https://github.com/samuelthng/t-house-blueprints/blob/main/notifications.yaml" target="_blank">Github Link</a> | 💬 <a href="https://community.home-assistant.io/t/notifications-actionable-mobile-notifications-script-with-optional-timeout-feature-and-camera-snapshots-works-with-ios-android/551552" target="_blank">Community Post</a>
+      <b>Version 2.1.8</b> | 🔗 <a href="https://github.com/samuelthng/t-house-blueprints/blob/main/notifications.yaml" target="_blank">Github Link</a> | 💬 <a href="https://community.home-assistant.io/t/notifications-actionable-mobile-notifications-script-with-optional-timeout-feature-and-camera-snapshots-works-with-ios-android/551552" target="_blank">Community Post</a>
       </div>
       <br>
 
@@ -45,6 +45,9 @@ blueprint:
 
       <details>
       <summary>Expand/collapse changelog</summary>
+
+      ### Version 2.1.8
+      - Fixed: Leaving `State to Watch` empty now clears the notification on any state change of the watched entity
 
       ### Version 2.1.7
       - Some bugs fixed
@@ -1430,6 +1433,10 @@ sequence:
                 to: !input watched_entity_state
                 for:
                   seconds: 0
+              - platform: state
+                entity_id: !input watched_entity
+                to: ~
+                enabled: "{{ watched_entity_enable and (script_watched_entity_state | default('', true) | string | length) == 0 }}"
             timeout: "{{ timeout }}"
             continue_on_timeout: true
       - alias: "Wait response indefinitely and watched_entity"
@@ -1458,6 +1465,10 @@ sequence:
                 to: !input watched_entity_state
                 for:
                   seconds: 0
+              - platform: state
+                entity_id: !input watched_entity
+                to: ~
+                enabled: "{{ watched_entity_enable and (script_watched_entity_state | default('', true) | string | length) == 0 }}"
 
   ##############################
   # Parse user response
